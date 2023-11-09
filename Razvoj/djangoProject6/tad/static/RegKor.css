@@ -1,0 +1,43 @@
+#tabela{
+    border-radius: 15px;
+    background-color: white;
+    border: 5px solid;
+    margin: auto;
+}
+
+.user{
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px 20px;
+    width: 400PX;
+
+}
+
+
+#cntr{
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#predaj{
+    background-color: black;
+    width: 40%;
+    color: aquamarine;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+    
+}
+
+#naslov{
+    font-size: large;
+    font-weight: 600;
+}
+#logo{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 100px;
+}

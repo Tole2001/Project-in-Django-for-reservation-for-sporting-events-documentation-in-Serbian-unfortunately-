@@ -1,0 +1,78 @@
+
+
+.navbar-brand {
+    
+    font-size: 28px;
+    
+
+}
+#content{
+    background-color: aquamarine;
+    background-size: cover;
+    height: 100vh;
+    text-align: center;
+    padding-top: 200px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    height: 100%;
+}
+#naslov{
+    position: relative;
+    text-decoration: dashed;
+}
+
+#tzl{
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid;
+    margin: auto;
+}
+
+#prijava{
+    font-size: large;
+    font-weight: 400;
+}
+
+.user{
+    border-radius: 6px;
+    font-size: 17px;
+    padding: 14px 16px;
+    width: 330px;
+
+}
+
+#submitt{
+    background-color: orange;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+    
+}
+
+#logo{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+#centriraj{
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+.submit{
+    background-color: black;
+    color: aquamarine;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+    
+}

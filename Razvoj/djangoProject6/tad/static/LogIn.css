@@ -1,0 +1,59 @@
+#naslov{
+    position: relative;
+    text-decoration: dashed;
+}
+
+#cnt{
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid;
+    margin: auto;
+}
+
+#prijava{
+    font-size: large;
+    font-weight: 400;
+}
+
+.lgn{
+    border-radius: 10px;
+    font-size: 22px;
+    padding: 10px 15px;
+    width: 400px;
+
+}
+
+#predaj{
+    background-color: black;
+    width: 40%;
+    color: aquamarine;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+    
+}
+
+#logo{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+    display: block;
+    text-align: center;
+}
+
+#cntr{
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+.submit{
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
+    
+}

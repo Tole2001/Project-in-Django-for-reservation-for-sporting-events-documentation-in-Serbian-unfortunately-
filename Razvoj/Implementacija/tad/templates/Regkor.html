@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RegistracijaKorisnika</title>
+    {% load static %}
+    <link href="{% static 'RegKor.css' %}" rel="stylesheet">
+</head>
+<body  style="background-color:aquamarine; font-family: Georgia, 'Times New Roman', Times, serif">
+<div id="cntr">
+        <img src="{% static 'TAD.jpg' %}" id="logo">
+        <form method=post>
+            <table id="tabela">
+                <tr>
+
+                    <td  align="center" id="naslov">
+
+                        Registracija korisnika
+
+                    </td>
+                </tr>
+
+             <tr>
+                <td align="center">
+                     <input type=text id = "ime"name=username class="user" placeholder="Ime" >
+                     <div id="cime" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type=text id ="prezime"name=surname class="user" placeholder="Prezime" >
+                    <div id="cprezime" class="emsg"></div>
+                </td>
+
+            </tr>
+             <tr>
+                <td align=center>
+                    <input type=password name="passwd" id ="passwd" placeholder="Lozinka" class="user"   >
+                    <div id="cpass" class="emsg"></div>
+                </td>
+
+            </tr>
+             <tr>
+                <td align=center>
+                    <input type=password name="passwdpt" id ="passwdpt" placeholder="Lozinka potvrda" class="user"   >
+                    <div id="agpass" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align=center>
+                    <input type="email" id="email" name=mail placeholder="Email" class="user" >
+                    <div id="cemail" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align=center>
+                    <input type="tel" name="phone" id = "phone" placeholder="Broj telefona" class="user"  minlength="9" maxlength="10">
+                    <div id="cnum" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align = center>
+                    <label for="opis">Nivo:</label><br>
+
+                    <select class ="user" id="categories" name="Kategorije" style = "width:100%">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align=center>
+               Datum rođenja:
+            </tr>
+            <tr>
+                <td align=center>
+               <input type="date" name=datum placeholder="Datum rođenja" class="user" required></td>
+            </tr>
+
+            <tr>
+                <td align=center>
+                    <label for="opis">Pol:</label><br>
+                    <select class ="user" id="categories" name="pol" style = "width:100%">
+                            <option value="M">Muskarac</option>
+                            <option value="F">Zena</option>
+
+
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+               <td align=center>
+               <input type="submit" value="Registruj se" id="predaj" name="create">
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'index' %}"> Povratak na pocetnu stranicu</a>
+
+                </td>
+
+            </tr>
+           </table>
+        </form>
+    </div>
+</body>
+</html>

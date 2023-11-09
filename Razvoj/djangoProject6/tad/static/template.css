@@ -1,0 +1,21 @@
+
+
+.navbar-brand {
+    color: orange;
+    font-size: 28px;
+    
+
+}
+#content{
+    background-color: aquamarine;
+    background-size: cover;
+    height: 100vh;
+    text-align: center;
+    padding-top: 200px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    height: 100%;
+}
+

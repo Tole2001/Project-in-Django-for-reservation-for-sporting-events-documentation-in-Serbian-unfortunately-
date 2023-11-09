@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'Pravljenje oglasa.css' %}" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <title>Home page : Organizator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body style=" font-family: Arial, Helvetica, sans-serif;">
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="{% url 'orgpoc' %}"><img src="{% static 'TAD.jpg' %}" alt="" style = "width:70px;"></a>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="container-fluid alert alert-success alert-dismissible" role="alert">
+                    {{ message }}
+                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <ul class ="navbar-nav" style ="color:white">
+
+            <li class = "nav-item">
+                <a href="{% url 'pravljenjeOglasa'%}" class="nav-link" style = "color: white;">Kreiraj&nbspoglas</a>
+            </li>
+            <li class = "nav-item">
+                <a href="{% url 'ocena_korisnika' %}" class="nav-link" style = "color: white;">Ocenjivanje&nbspkorisnika</a>
+            </li>
+            <li class = "nav-item">
+                <a href="{% url 'orgPregledOglasa' %}" class="nav-link" style = "color: white;">pregled&nbspmojih&nbspoglasa</a>
+            </li>
+            <li class = "nav-item">
+                <a href="{% url 'out' %}" class="nav-link" style = "color: white;">Odjavi&nbspse</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid" id="main">
+        <h2>Dobro dosli!</h2>
+        <div class="container-fluid">
+            Ulogovani ste kao Organizator.
+        </div>
+
+            <div class = "container-fluid" id = "spisak">
+        {% csrf_token %}
+        {% for oglas, korisnici in oglas_dict.items %}
+                {% if korisnici %}
+          <h3>Oglas: {{ oglas.idoglas }} Datum: {{oglas.datum}}</h3>
+          <ul>
+            {% for korisnik in korisnici %}
+              <li id = "card-{{ korisnik.iduser }}">{{ korisnik.ime }} - {{ korisnik.datum }} - {{ korisnik.nivo }}
+              <button class="accept-btn" style="background-color: lightgreen; color: black;" data-oglas="{{ oglas.idoglas }}" data-korisnik="{{ korisnik.iduser }}">Accept</button>
+        <button class="decline-btn" style="background-color: red; color: black;" data-oglas="{{ oglas.idoglas }}" data-korisnik="{{ korisnik.iduser }}">Decline</button>
+              </li>
+            {% endfor %}
+          </ul>
+                {% endif %}
+        {% endfor %}
+    </div>
+
+    </div>
+
+
+
+</body>
+<script>
+$('.accept-btn').click(function() {
+  var oglasId = $(this).data('oglas');
+  var korisnikId = $(this).data('korisnik');
+  updateStatus(oglasId, korisnikId, 1); // Pass 1 for accepted status
+});
+
+$('.decline-btn').click(function() {
+  var oglasId = $(this).data('oglas');
+  var korisnikId = $(this).data('korisnik');
+  updateStatus(oglasId, korisnikId, 2); // Pass 2 for rejected status
+});
+
+function updateStatus(oglasId, korisnikId, status) {
+  $.ajax({
+    url: '{% url 'update_status' %}',
+    type: 'POST',
+    data: {
+      'oglas_id': oglasId,
+      'korisnik_id': korisnikId,
+      'status': status
+    },
+    beforeSend: function(xhr, settings) {
+    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+    },
+    success: function(response) {
+       $('#card-' + korisnikId).remove();
+    },
+    error: function(xhr, status, error) {
+      // Handle error, if needed
+    }
+  });
+}
+</script>
+</html>

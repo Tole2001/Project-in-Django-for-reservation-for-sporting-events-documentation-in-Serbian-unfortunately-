@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'KorisnikPregledOglasa.css' %}" rel="stylesheet" >
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <title>PregledOglasa</title>
+    <style>
+        .hidden-div {
+          display: none;
+        }
+    </style>
+</head>
+<body style=" font-family: Arial, Helvetica, sans-serif;">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="{% url 'korpoc' %}"><img src="{% static 'TAD.jpg' %}" alt="" style = "width:70px;"></a>
+            </div>
+            <ul class ="navbar-nav" style ="color:white">
+                <li class = "nav-item">
+                    <a href="" class="nav-link" style = "color: white;">Pregled&nbspoglasa</a>
+                </li>
+                <li class = "nav-item">
+                    <a href="{% url 'out' %}" class="nav-link" style = "color: white;">Odjavi&nbspse</a>
+                </li>
+
+            </ul>
+        </nav>
+        <div id = "content" >
+            <form id="search" style = "justify-content:center; display:flex;  width:100%;">
+                <select id="categories" name="Kategorije" style = "width:30%">
+                    <option value="all">Sve</option>
+                    <option value="soccer">Fudbal</option>
+                    <option value="basketball">Kosarka</option>
+                    <option value="volleyball">Odbojka</option>
+                    <option value="tennis">Tenis</option>
+                </select>
+                <button class="submit">Pretraži</button>
+            </form>
+           <div id = "card-container">
+                <!<!-- Postavljanje oglasa -->
+                {% for kom in oglas %}
+                    <div id="card-{{ kom.idoglas }}" class="card mx-auto" style="width: 300px;
+                    background-color: black;color: aquamarine;justify-content: center;margin-top: 10px;">
+                        <div class="card-body" data-sport="{{ kom.sport }}">
+                            <img class = "card-img-top" src="/static/{{ kom.sport }}.jpg">
+                            <div class="card=body">
+                                <p>
+                                    <br>IdOglasa:{{ kom.idoglas }}
+                                    <br>Potrebno igraca:{{ kom.brigraca }}
+                                    <br>Datum:{{ kom.datum }}
+                                    <br>Vreme:{{ kom.vreme }}
+                                    <br>Lokacija:{{ kom.lokacija }}</p>
+                            </div>
+
+                            <button  onclick = "removeCard({{ kom.idoglas }},{{ kom.brigraca }})"class="btn " style="background-color: aquamarine; color: black;" >
+                                Prijavi se</button>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!-- Events will be appended here dynamically -->
+            </div>
+        </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function() {
+                $('.submit').click(function(e) {
+                    e.preventDefault();
+                    var selectedCategory = $('#categories').val();
+                    filterCards(selectedCategory);
+                });
+
+                function filterCards(selectedCategory) {
+                    $('#card-container .card').each(function() {
+                        var cardSport = $(this).find('.card-body').data('sport');
+                        if (cardSport === selectedCategory || selectedCategory === 'all') {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+function removeCard(cardId,br) {
+    //"removeCard(kom.idoglas }}, kom.brigraca }})" sa viticastim celim i umesto br igraca prosledi idUser
+    //br treba da postane id user
+    //$('#card-' + cardId).remove();
+    $.ajax({
+        url: '{% url 'insert_oglas' %}',
+        method: 'POST',
+        data: {
+            card_id: cardId,
+            card_title: br
+        },
+        beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        },
+        success: function(data) {
+            if (data.status === 'success') {
+                // Insertion was successful, remove the card from the DOM.
+                $('#card-' + cardId).remove();
+            } else {
+                alert('An error occurred while inserting the card.');
+            }
+        },
+        error: function() {
+            alert('An error occurred while inserting the card2.');
+        }
+    });
+}
+</script>

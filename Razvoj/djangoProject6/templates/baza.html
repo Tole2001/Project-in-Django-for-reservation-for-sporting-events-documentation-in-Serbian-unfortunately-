@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TAD</title>
+    {% load static %}
+    <link href="{% static 'LogIn.css' %}" rel="stylesheet" >
+    <style>
+        .err { background: #ffe6ee; border: 1px solid #b1395f; }
+        .emsg { color: #c12020; font-weight: bold; }
+    </style>
+</head>
+<body  style="background-color:aquamarine; font-family: Georgia, 'Times New Roman', Times, serif">
+    <div id="cntr">
+        <img src="{% static 'TAD.jpg' %}" id="logo">
+        <form method="post">
+            {% csrf_token %}
+            <table id="cnt" style="height:max-content ;background-color: white;">
+                <tr>
+                    <td colspan="2" align="center" id="prijava">
+                        Prijavite se
+                        <!--error msg-->
+                        {% if msg != "" %}
+                            <div id ="ponovo" class ="emsg">{{ msg }}</div>
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="prijava">
+
+                    </td>
+                </tr>
+             <tr>
+                <td colspan=2 align=center>
+                    {{ form.username }}
+                    <!--<input type=text name=email class="lgn" placeholder="E-mail">-->
+                </td>
+            </tr>
+            <tr></tr>
+             <tr>
+                <td colspan=2 align=center>
+                    {{ form.password }}
+               <!--<input type=password name=passwd placeholder="Lozinka" class="lgn">-->
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+             <tr>
+                <td colspan=2 align=center>
+                    <!--<select class = "lgn" id="categories" name="Korisnici" style = "width:100%">
+                        <option value="0">Korisnik</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Organizator</option>
+                    </select>-->
+                    {{ form.userChoice }}
+                </td>
+            </tr>
+            <tr></tr>
+             <tr>
+                <td>
+                    <a href="{% url 'regkor' %}"> Registruj se kao korisnik</a>
+
+                </td>
+
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <a href="{% url 'regorg' %}"> Registruj se kao organizator</a>
+
+                </td>
+
+            </tr>
+            <tr></tr>
+            <tr>
+               <td colspan=2 align=center>
+               <input type=submit value="Uloguj se" id="predaj">
+            </td>
+            </tr>
+           </table>
+        </form>
+    </div>
+</body>
+</html>

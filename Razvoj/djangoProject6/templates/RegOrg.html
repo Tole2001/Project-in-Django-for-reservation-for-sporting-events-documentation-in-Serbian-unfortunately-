@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RegistracijaKorisnika</title>
+    {% load static %}
+
+    <link href="{% static 'RegKor.css' %}" rel="stylesheet">
+    <style>
+        .err { background: #ffe6ee; border: 1px solid #b1395f; }
+        .emsg { color: #c12020; font-weight: bold; }
+    </style>
+</head>
+<body style="background-color:aquamarine; font-family: Georgia, 'Times New Roman', Times, serif;">
+    <div id="cntr">
+        <img src="{% static 'TAD.jpg' %}" id="logo">
+        <form method=post onsubmit="return check()" novalidate >
+            {% csrf_token %}
+            <table id="tabela">
+                <tr>
+                    <td  align="center" id="naslov">
+                        Registracija korisnika
+                        {% if poruka != "" %}
+                            <div id ="ponovo" class ="emsg">{{ poruka }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+             <tr>
+                <td align="center">
+                    <input type=text id = "ime"name=ime class="user" placeholder="Ime" required>
+                    <div id="cime" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type=text id ="prezime"name=prezime class="user" placeholder="Prezime" required>
+                    <div id="cprezime" class="emsg"></div>
+                </td>
+
+            </tr>
+             <tr>
+                <td align=center>
+                    <input type=password name="passwd" id ="passwd" placeholder="Šifra" class="user" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" required >
+                    <div id="cpass" class="emsg"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align=center>
+                    <input type="email" id="email" name=email placeholder="Email" class="user" required>
+                    <div id="cemail" class="emsg"></div>
+                </td>
+
+            </tr>
+            <tr>
+                <td align=center>
+                    <input type="tel" name="phone" id = "phone" placeholder="Broj telefona" class="user"  required minlength="9" maxlength="10">
+                    <div id="cnum" class="emsg"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align=center>
+                    <input type="tel" id="JMBG"name=JMBG placeholder="JMBG" class="user" pattern="[0-9]{13}" required>
+                    <div id="cJMBG" class="emsg"></div>
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <td align=center>
+               Datum rođenja:
+            </tr>
+            <tr>
+                <td align=center>
+               <input type="date" name=datum placeholder="Datum rođenja" class="user" required></td>
+            </tr>
+
+            <tr>
+                <td align=center>
+
+                Pol:
+                    <select class ="user" id="pol" name="pol" style = "width:100%">
+                        <option value="0">Muskarac</option>
+                        <option value="1">Zena</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+               <td align=center>
+               <input type="submit" value="Registruj se" id="predaj">
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'index' %}"> Povratak na pocetnu stranicu</a>
+
+                </td>
+
+            </tr>
+           </table>
+        </form>
+    </div>
+<script>
+        function check () {
+            // (C1) INIT
+            var valid = true, error = "", field = "";
+
+            // (C2) NAME
+            field = document.getElementById("passwd");
+            error = document.getElementById("cpass");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "Mora >5 i bar jedno veliko i jedno malo slovo kao i broj\r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+            //Ime
+            field = document.getElementById("ime");
+            error = document.getElementById("cime");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "Ime ne sme biti prazno\r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+            //Prezime
+            field = document.getElementById("prezime");
+            error = document.getElementById("cprezime");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "Prezime ne sme biti prazno\r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+            //Email
+            field = document.getElementById("email");
+            error = document.getElementById("cemail");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "Email ne sme biti prazan i mora xx@xx.xx format\r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+            //JMBG
+            field = document.getElementById("JMBG");
+            error = document.getElementById("cJMBG");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "JMBG ne sme biti prazan i mora imati 13 cifara\r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+
+
+            // (C3) NUMBER
+            field = document.getElementById("phone");
+            error = document.getElementById("cnum");
+            if (!field.checkValidity()) {
+                valid = false;
+                field.classList.add("err");
+                error.innerHTML = "Broj mora imati izmedju 9 i 10 cifara \r\n";
+            } else {
+                field.classList.remove("err");
+                error.innerHTML = "";
+            }
+
+            // (C4) RESULT
+            return valid;
+        }
+    </script>
+</body>
+</html>
